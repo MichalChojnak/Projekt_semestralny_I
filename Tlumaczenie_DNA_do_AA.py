@@ -1,0 +1,1 @@
+# instrukcja do tlumaczenia sekwencji DNA do aa
