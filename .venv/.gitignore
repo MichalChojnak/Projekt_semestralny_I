@@ -1,0 +1,18 @@
+# Ignore virtual environment
+.venv/
+venv/
+
+# Ignore PyCharm files
+.idea/
+
+# Ignore build/dist
+build/
+dist/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Allow only source files
+*.py
+!.gitignore
