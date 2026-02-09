@@ -1,5 +1,4 @@
-# instrukcja do tlumaczenia sekwencji DNA do aa
-# Słownik kodonów DNA do aminokwasów (standardowy kod genetyczny)
+# instrukcja do tlumaczenia sekwencji DNA -> AA
 codon_table = {
     'TTT': 'F', 'TTC': 'F', 'TTA': 'L', 'TTG': 'L',
     'CTT': 'L', 'CTC': 'L', 'CTA': 'L', 'CTG': 'L',
