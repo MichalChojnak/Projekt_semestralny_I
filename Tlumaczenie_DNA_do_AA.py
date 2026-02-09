@@ -1,4 +1,4 @@
-# DNA to Protein Translator with Validation
+# DNA to Protein Translator with Validation and Codon Length Check
 
 # Standard codon table
 codon_table = {
@@ -45,6 +45,7 @@ def validate_dna(dna_seq):
 print("=== DNA to Protein Translator ===")
 print("Enter a DNA sequence to translate it into protein sequence.")
 print("Only A, G, C, T are allowed.")
+print("The sequence length must be a multiple of 3.")
 print("Type 'exit' to quit the program.\n")
 
 while True:
@@ -53,16 +54,21 @@ while True:
         print("Exiting the program. Goodbye!")
         break
 
-    # Validate DNA sequence
+    # Validate DNA letters
     errors = validate_dna(dna_input)
     if errors:
         print("Error: Invalid characters found in DNA sequence!")
         for pos, char in errors:
             print(f" - Position {pos+1}: '{char}' is not valid")
-        # Show sequence with invalid characters highlighted
         highlight = ''.join([char if char.upper() in {'A','G','C','T'} else '^' for char in dna_input])
         print("Sequence:  ", dna_input)
         print("Highlight: ", highlight)
+        print("-" * 50)
+        continue
+
+    # Validate length (must be multiple of 3)
+    if len(dna_input) % 3 != 0:
+        print(f"Error: Sequence length is {len(dna_input)}. DNA sequence must be a multiple of 3 (codons).")
         print("-" * 50)
         continue
 
