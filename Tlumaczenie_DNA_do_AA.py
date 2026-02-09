@@ -1,4 +1,4 @@
-# instrukcja do tlumaczenia sekwencji DNA -> AA
+# kod do tłumaczenia DNA -> aminokwasy
 codon_table = {
     'TTT': 'F', 'TTC': 'F', 'TTA': 'L', 'TTG': 'L',
     'CTT': 'L', 'CTC': 'L', 'CTA': 'L', 'CTG': 'L',
@@ -18,17 +18,23 @@ codon_table = {
     'GGT': 'G', 'GGC': 'G', 'GGA': 'G', 'GGG': 'G'
 }
 
-
 def translate_dna(dna_seq):
     """Przetłumacz sekwencję DNA na sekwencję aminokwasów"""
-    dna_seq = dna_seq.upper().replace(" ", "")  # oczyszczenie sekwencji
+    dna_seq = dna_seq.upper().replace(" ", "")
     protein_seq = ""
-
-    # Iteracja po kodonach (co 3 nukleotydy)
     for i in range(0, len(dna_seq) - 2, 3):
         codon = dna_seq[i:i + 3]
-        amino_acid = codon_table.get(codon, 'X')  # 'X' jeśli kodon nieznany
+        amino_acid = codon_table.get(codon, 'X')  # 'X' = nieznany kodon
         protein_seq += amino_acid
-
     return protein_seq
 
+# =====================
+# INTERAKTYWNA CZĘŚĆ
+# =====================
+while True:
+    dna_input = input("Podaj sekwencję DNA (lub wpisz 'exit' aby zakończyć): ").strip()
+    if dna_input.lower() == 'exit':
+        break
+    protein_output = translate_dna(dna_input)
+    print("Sekwencja białka:", protein_output)
+    print("-" * 50)
