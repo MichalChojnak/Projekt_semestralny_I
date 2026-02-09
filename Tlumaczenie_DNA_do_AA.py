@@ -1,4 +1,4 @@
-# DNA to Protein Translation Program
+# DNA to Protein Translator with Validation
 
 # Standard codon table
 codon_table = {
@@ -30,11 +30,21 @@ def translate_dna(dna_seq):
         protein_seq += amino_acid
     return protein_seq
 
+def validate_dna(dna_seq):
+    """Check for invalid letters in DNA sequence"""
+    valid_nucleotides = {'A', 'G', 'C', 'T'}
+    errors = []
+    for i, nucleotide in enumerate(dna_seq.upper()):
+        if nucleotide not in valid_nucleotides:
+            errors.append((i, nucleotide))
+    return errors
+
 # =====================
 # INTERACTIVE MENU
 # =====================
 print("=== DNA to Protein Translator ===")
 print("Enter a DNA sequence to translate it into protein sequence.")
+print("Only A, G, C, T are allowed.")
 print("Type 'exit' to quit the program.\n")
 
 while True:
@@ -42,9 +52,21 @@ while True:
     if dna_input.lower() == 'exit':
         print("Exiting the program. Goodbye!")
         break
-    if len(dna_input) < 3:
-        print("Sequence too short to translate. Please enter at least 3 nucleotides.\n")
+
+    # Validate DNA sequence
+    errors = validate_dna(dna_input)
+    if errors:
+        print("Error: Invalid characters found in DNA sequence!")
+        for pos, char in errors:
+            print(f" - Position {pos+1}: '{char}' is not valid")
+        # Show sequence with invalid characters highlighted
+        highlight = ''.join([char if char.upper() in {'A','G','C','T'} else '^' for char in dna_input])
+        print("Sequence:  ", dna_input)
+        print("Highlight: ", highlight)
+        print("-" * 50)
         continue
+
+    # Translate sequence
     protein_output = translate_dna(dna_input)
     print("Protein sequence:", protein_output)
     print("-" * 50)
