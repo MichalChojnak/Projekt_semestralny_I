@@ -1,21 +1,43 @@
 from Bio import pairwise2
 from Bio.pairwise2 import format_alignment
 
-# Przykładowe sekwencje
+# Sekwencje
 seq1 = "MKTFFVLLLAGTAVVAAAGGAGGAGGAASTTLLVAG"
-seq2 = "VVLLLAGTAVVAAAGGAGG"
+seq2 = "MKTVFVLLLAGTAVVAAAGGAGGAGGAASTTLLVVG"
 
-# Lokalne dopasowanie (Smith-Waterman)
+# Lokalne dopasowanie
 alignments = pairwise2.align.localxx(seq1, seq2)
+aligned_seq1, aligned_seq2, score, start, end = alignments[0]
 
-# Wybieramy najlepsze dopasowanie
-best_alignment = alignments[0]
-aligned_seq1, aligned_seq2, score, start, end = best_alignment
+# Grupy aminokwasów
+hydrofobowe = "AVILMFYW"
+polarne = "STNQ"
+zasadowe = "KRH"
+kwasowe = "DE"
+specjalne = "CGP"
 
-print("Najlepsze lokalne dopasowanie:")
-print(format_alignment(*best_alignment))
+def grupa(aa):
+    if aa in hydrofobowe: return "hydrofobowe"
+    if aa in polarne: return "polarne"
+    if aa in zasadowe: return "zasadowe"
+    if aa in kwasowe: return "kwasowe"
+    if aa in specjalne: return "specjalne"
+    return "inne"
 
-# Obliczamy procent podobieństwa w dopasowanym fragmencie
-matches = sum(a == b for a, b in zip(aligned_seq1, aligned_seq2))
-identity = matches / len(aligned_seq1) * 100
-print(f"Procent identycznych pozycji w dopasowaniu lokalnym: {identity:.2f}%")
+# Kolory ANSI
+RED = "\033[91m"
+YELLOW = "\033[93m"
+END = "\033[0m"
+
+# Wyświetlenie z kolorami
+colored_alignment = ""
+for a, b in zip(aligned_seq1, aligned_seq2):
+    if a == b:
+        colored_alignment += RED + a + END
+    elif grupa(a) == grupa(b):
+        colored_alignment += YELLOW + a + END
+    else:
+        colored_alignment += a
+
+print("Lokalne dopasowanie z kolorami:")
+print(colored_alignment)
