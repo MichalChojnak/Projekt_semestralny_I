@@ -1,4 +1,6 @@
-# kod do tłumaczenia DNA -> aminokwasy
+# DNA to Protein Translation Program
+
+# Standard codon table
 codon_table = {
     'TTT': 'F', 'TTC': 'F', 'TTA': 'L', 'TTG': 'L',
     'CTT': 'L', 'CTC': 'L', 'CTA': 'L', 'CTG': 'L',
@@ -19,22 +21,30 @@ codon_table = {
 }
 
 def translate_dna(dna_seq):
-    """Przetłumacz sekwencję DNA na sekwencję aminokwasów"""
+    """Translate DNA sequence to protein sequence"""
     dna_seq = dna_seq.upper().replace(" ", "")
     protein_seq = ""
     for i in range(0, len(dna_seq) - 2, 3):
         codon = dna_seq[i:i + 3]
-        amino_acid = codon_table.get(codon, 'X')  # 'X' = nieznany kodon
+        amino_acid = codon_table.get(codon, 'X')  # 'X' if codon is unknown
         protein_seq += amino_acid
     return protein_seq
 
 # =====================
-# INTERAKTYWNA CZĘŚĆ
+# INTERACTIVE MENU
 # =====================
+print("=== DNA to Protein Translator ===")
+print("Enter a DNA sequence to translate it into protein sequence.")
+print("Type 'exit' to quit the program.\n")
+
 while True:
-    dna_input = input("Podaj sekwencję DNA (lub wpisz 'exit' aby zakończyć): ").strip()
+    dna_input = input("Enter DNA sequence: ").strip()
     if dna_input.lower() == 'exit':
+        print("Exiting the program. Goodbye!")
         break
+    if len(dna_input) < 3:
+        print("Sequence too short to translate. Please enter at least 3 nucleotides.\n")
+        continue
     protein_output = translate_dna(dna_input)
-    print("Sekwencja białka:", protein_output)
+    print("Protein sequence:", protein_output)
     print("-" * 50)
