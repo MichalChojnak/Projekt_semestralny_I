@@ -32,9 +32,3 @@ def translate_dna(dna_seq):
 
     return protein_seq
 
-
-# Przykład użycia
-dna_sequence = "ATGGCCATTGTAATGGGCCGCTGAAAGGGTGCCCGATAG"
-protein = translate_dna(dna_sequence)
-print("Sekwencja DNA:", dna_sequence)
-print("Sekwencja białka:", protein)
